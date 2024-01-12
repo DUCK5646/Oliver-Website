@@ -15,6 +15,8 @@ def contact():
 @app.route('/products')
 def product():
     return render_template("product.html")
-
+@app.route('/secret')
+def secret():
+    return render_template("secret.html")
 if __name__ == '__main__':
     app.run(debug=True)
