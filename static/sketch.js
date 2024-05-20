@@ -14,8 +14,8 @@ function setup() {
 }
 
   function draw() {
-    createCanvas(windowWidth, 300);
-    background(100);
+    createCanvas(windowWidth, 400);
+    background(100,100,100,0);
 
     //lines
     for (let i = 0; i < windowWidth; i+=1.1) {
