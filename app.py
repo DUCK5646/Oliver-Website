@@ -1,9 +1,17 @@
 import json
+
+import flask
+import gtts
 from flask import Flask, render_template, request
 import os
+
+
 from openai import OpenAI
 app = Flask(__name__)
+app.config['BOT'] = 'static/audio'
 client= OpenAI()
+
+
 
 @app.route('/')
 def grid():
