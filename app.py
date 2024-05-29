@@ -1,5 +1,7 @@
-import json
+#Images courtesy of Adobe Firefly and Text courtesy of ChatGPT
+#Made by Oliver Miller of CAS Comp Sci
 
+import json
 import flask
 import gtts
 from flask import Flask, render_template, request
@@ -11,16 +13,13 @@ app = Flask(__name__)
 app.config['BOT'] = 'static/audio'
 client = OpenAI()
 
-
 @app.route('/')
 def grid():
     return render_template("index.html")
 
-
 @app.route('/lyrics')
 def contact():
     return render_template("lyrics.html")
-
 
 @app.route('/chat')
 def chat_completion():
@@ -31,11 +30,7 @@ def chat_completion():
         messages=messages
 
     )
-    # print(completion.choices[0].message)
     return str(completion.choices[0].message.content)
 
-
 if __name__ == '__main__':
-
-
-    app.run(debug=True,port=3000)
+    app.run(debug=True,port=2100)

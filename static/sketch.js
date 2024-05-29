@@ -1,4 +1,4 @@
-let simpSynth; //first, you need a variable to store each synth you want to makea
+let simpSynth;
 let kickDrum, snareDrum;
 
 let barY = []
@@ -18,9 +18,9 @@ function setup() {
 
     simpSynth = new Tone.Synth({
         oscillator: {
-            type: "square" //the type of waveform the synthesizer produces. Can be square, since, triangle, or sawtooth
+            type: "square"
         },
-        envelope: { //sets the various sound properties for the synth
+        envelope: {
             attack: 0.05,
             decay: 0.5,
             sustain: 1,
@@ -32,24 +32,24 @@ function setup() {
         pitchDecay: 0.05,
         octaves: 10,
         oscillator: {
-            type: "square" //the type of waveform the synthesizer produces. Can be square, since, triangle, or sawtooth
+            type: "triangle"
         },
-        envelope: { //sets the various sound properties for the synth
+        envelope: {
             attack: 0.1,
             decay: 0.4,
             sustain: 0.01,
-            release: 1.4,
+            release: 1.7,
             attackCurve: "exponential"
         },
-        volume: -20
+        volume: 0
     }).toMaster();
     snareDrum = new Tone.NoiseSynth({
-        pitchDecay: 0.05,
+        pitchDecay: 0.2,
         octaves: 10,
         oscillator: {
-            type: "square" //the type of waveform the synthesizer produces. Can be square, since, triangle, or sawtooth
+            type: "triangle"
         },
-        envelope: { //sets the various sound properties for the synth
+        envelope: {
             attack: 0.1,
             decay: 0.4,
             sustain: 0.01,
@@ -61,9 +61,9 @@ function setup() {
 }
 
 function draw() {
-  textAlign(CENTER);
+    textAlign(CENTER);
     createCanvas(windowWidth, 400);
-    background(100,100,100,0);
+    background(100, 100, 100, 0);
 
     //lines
     for (let i = 0; i < windowWidth; i += 1.1) {
@@ -90,35 +90,32 @@ function draw() {
 }
 
 function mousePressed() {
-         // Define the sequence of notes
-    const notes = ["D5","D4", "F4","F5", "A4", "C5", "E5", "E4#"];
+    // Define the sequence of notes
+    const notes = ["D5", "D4", "F4", "F5", "A4", "C5", "E5", "E4#"];
 
-    // Define the time intervals for each note
-    const intervals = [0,0, 0.5, 1, 1.5, 2, 2.5,3];
+    const intervals = [0, 0, 0.5, 1, 1.5, 2, 2.5, 3];
 
     const kickPattern = [0, 3];
     const snarePattern = [.5];
 
-    // Create a loop that will trigger the notes
+
     const loop = new Tone.Loop(time => {
         for (let i = 0; i < notes.length; i++) {
             simpSynth.triggerAttackRelease(notes[i], "4n", time + intervals[i]);
         }
     }, "2m").start(0);
-     // Create a loop for the kick drum
+
     const kickLoop = new Tone.Loop(time => {
         kickPattern.forEach(interval => {
             kickDrum.triggerAttackRelease("D1", "4n", time + interval);
         });
-    }, "1m").start(0); // Loop every measure
+    }, "1m").start(0);
 
-    // Create a loop for the snare drum
     const snareLoop = new Tone.Loop(time => {
         snarePattern.forEach(interval => {
             snareDrum.triggerAttackRelease("4n", time + interval);
         });
-    }, "1m").start(0); // Loop every measure
+    }, "1m").start(0);
 
-    // Start the transport
     Tone.Transport.start();
 }
